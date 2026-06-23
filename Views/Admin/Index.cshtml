@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Panel Admin";
+}
+
+<div class="min-h-screen bg-gray-100">
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <h1 class="text-2xl font-bold text-indigo-600">Panel de Administración</h1>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Resumen del Sistema</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-gray-600 text-sm font-bold">Total Usuarios</h3>
+                <p class="text-4xl font-bold text-indigo-600">@ViewBag.UserCount</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-gray-600 text-sm font-bold">Total Envíos</h3>
+                <p class="text-4xl font-bold text-green-600">@ViewBag.ShipmentCount</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-gray-600 text-sm font-bold">Total Conductores</h3>
+                <p class="text-4xl font-bold text-blue-600">@ViewBag.DriverCount</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Acciones Rápidas</h3>
+                <ul class="space-y-3">
+                    <li><a href="/Shipments" class="text-indigo-600 hover:underline">→ Gestionar Envíos</a></li>
+                    <li><a href="/Drivers" class="text-indigo-600 hover:underline">→ Gestionar Conductores</a></li>
+                    <li><a href="#" class="text-indigo-600 hover:underline">→ Ver Reportes</a></li>
+                    <li><a href="#" class="text-indigo-600 hover:underline">→ Configuración</a></li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Sistema</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>✅ Base de datos: Conectada</li>
+                    <li>✅ API: En línea</li>
+                    <li>✅ Usuarios activos: 12</li>
+                    <li>✅ Última actualización: Hoy</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

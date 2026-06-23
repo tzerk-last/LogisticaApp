@@ -1,0 +1,78 @@
+@model LogisticaApp.Models.Driver
+
+@{
+    ViewData["Title"] = "Editar Conductor";
+}
+
+<h2 class="text-3xl font-bold text-gray-800 mb-8">Editar Conductor: @Model.User?.Name</h2>
+
+<div class="bg-white rounded-lg shadow-md p-8 max-w-2xl">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            @Html.ValidationSummary(false)
+        </div>
+    }
+
+    <form method="post" action="/Drivers/Edit" class="space-y-6">
+        <input type="hidden" name="Id" value="@Model.Id">
+        <input type="hidden" name="UserId" value="@Model.UserId">
+        <input type="hidden" name="AverageRating" value="@Model.AverageRating">
+        <input type="hidden" name="TotalDeliveries" value="@Model.TotalDeliveries">
+
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Conductor</label>
+            <input type="text" value="@Model.User?.Name" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100" disabled>
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Número de Licencia *</label>
+            <input type="text" name="LicenseNumber" value="@Model.LicenseNumber"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600" required>
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Vencimiento de Licencia *</label>
+            <input type="date" name="LicenseExpiry" value="@Model.LicenseExpiry.ToString("yyyy-MM-dd")"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600" required>
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Vehículo</label>
+            <select name="VehicleId" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                <option value="">Sin asignar</option>
+                @{
+                    var vehicles = (List<LogisticaApp.Models.Vehicle>)ViewBag.Vehicles;
+                    foreach (var vehicle in vehicles)
+                    {
+                        var selected = Model.VehicleId == vehicle.Id ? "selected" : "";
+                        <option value="@vehicle.Id" selected="@selected">@vehicle.LicensePlate - @vehicle.Brand @vehicle.Model</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Estado *</label>
+            <select name="Status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                @{
+                    var status = Model.Status.ToString();
+                    <option value="Available" selected="@(status == "Available" ? "selected" : "")">Disponible</option>
+                    <option value="OnDelivery" selected="@(status == "OnDelivery" ? "selected" : "")">En Entrega</option>
+                    <option value="OnBreak" selected="@(status == "OnBreak" ? "selected" : "")">En Descanso</option>
+                    <option value="Inactive" selected="@(status == "Inactive" ? "selected" : "")">Inactivo</option>
+                }
+            </select>
+        </div>
+
+        <div class="flex gap-4 pt-4">
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold">
+                Guardar Cambios
+            </button>
+            <a href="/Drivers" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,76 @@
+@model LogisticaApp.Models.RegisterModel
+
+@{
+    ViewData["Title"] = "Registro";
+    Layout = "_LayoutHome";
+}
+
+<div class="min-h-screen bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-2xl p-8 w-full max-w-md">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2 text-center">Crear Cuenta</h1>
+        <p class="text-gray-600 text-center mb-8">Regístrate para empezar</p>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+                @Html.ValidationSummary(false)
+            </div>
+        }
+
+        <form method="post" action="/Home/Register" class="space-y-4">
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Nombre Completo</label>
+                <input type="text" name="Name" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    placeholder="Juan Pérez" required>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Email</label>
+                <input type="email" name="Email" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    placeholder="correo@ejemplo.com" required>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Teléfono</label>
+                <input type="tel" name="Phone" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    placeholder="3001234567" required>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Rol</label>
+                <select name="Role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                    <option value="1">Cliente</option>
+                    <option value="2">Conductor</option>
+                    <option value="3">Operador Logístico</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Contraseña</label>
+                <input type="password" name="Password" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    placeholder="••••••••" required>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Confirmar Contraseña</label>
+                <input type="password" name="PasswordConfirm" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg hover:bg-indigo-700 transition">
+                Crear Cuenta
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-gray-600">¿Ya tienes cuenta? 
+                <a href="/Home/Login" class="text-indigo-600 font-bold hover:underline">Inicia sesión</a>
+            </p>
+        </div>
+    </div>
+</div>

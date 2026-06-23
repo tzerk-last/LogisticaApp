@@ -1,0 +1,40 @@
+@model LogisticaApp.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Eliminar Vehículo";
+}
+
+<h2 class="text-3xl font-bold text-gray-800 mb-8">Eliminar Vehículo</h2>
+
+<div class="bg-white rounded-lg shadow-md p-8 max-w-2xl">
+    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg mb-6">
+        <p class="font-bold">⚠️ Advertencia</p>
+        <p>Esta acción es irreversible. ¿Estás seguro?</p>
+    </div>
+
+    <div class="space-y-4 mb-8">
+        <div>
+            <label class="text-gray-600 text-sm">Placa</label>
+            <p class="text-lg font-bold">@Model.LicensePlate</p>
+        </div>
+        <div>
+            <label class="text-gray-600 text-sm">Vehículo</label>
+            <p class="text-lg font-bold">@Model.Brand @Model.Model (@Model.Year)</p>
+        </div>
+        <div>
+            <label class="text-gray-600 text-sm">Capacidad</label>
+            <p class="text-lg font-bold">@Model.MaxWeightKg kg</p>
+        </div>
+    </div>
+
+    <form method="post" action="/Vehicles/Delete" class="flex gap-4">
+        <input type="hidden" name="Id" value="@Model.Id">
+        
+        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-bold">
+            Sí, Eliminar
+        </button>
+        <a href="/Vehicles" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
+            Cancelar
+        </a>
+    </form>
+</div>

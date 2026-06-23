@@ -1,0 +1,69 @@
+@model List<LogisticaApp.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Vehículos";
+}
+
+<div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-800">Gestión de Vehículos</h2>
+    <a href="/Vehicles/Create" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-bold">
+        + Nuevo Vehículo
+    </a>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6">
+    @if (Model.Count == 0)
+    {
+        <div class="text-center text-gray-500 py-8">
+            <p class="text-lg">No hay vehículos registrados</p>
+        </div>
+    }
+    else
+    {
+        <table class="w-full">
+            <thead class="border-b bg-gray-50">
+                <tr>
+                    <th class="text-left py-3 px-4">Placa</th>
+                    <th class="text-left py-3 px-4">Marca</th>
+                    <th class="text-left py-3 px-4">Modelo</th>
+                    <th class="text-left py-3 px-4">Año</th>
+                    <th class="text-left py-3 px-4">Cap. Máx (kg)</th>
+                    <th class="text-left py-3 px-4">Cap. Actual (kg)</th>
+                    <th class="text-left py-3 px-4">Estado</th>
+                    <th class="text-left py-3 px-4">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vehicle in Model)
+                {
+                    var statusStr = vehicle.Status.ToString();
+                    var statusClass = statusStr == "Available" ? "bg-green-100 text-green-700" :
+                                      statusStr == "InMaintenance" ? "bg-yellow-100 text-yellow-700" :
+                                      "bg-red-100 text-red-700";
+                    
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4 font-bold">@vehicle.LicensePlate</td>
+                        <td class="py-3 px-4">@vehicle.Brand</td>
+                        <td class="py-3 px-4">@vehicle.Model</td>
+                        <td class="py-3 px-4">@vehicle.Year</td>
+                        <td class="py-3 px-4">@vehicle.MaxWeightKg</td>
+                        <td class="py-3 px-4">@vehicle.CurrentWeightKg</td>
+                        <td class="py-3 px-4">
+                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusClass">
+                                @vehicle.Status
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 space-x-2">
+                            <a href="/Vehicles/Edit/@vehicle.Id" class="text-indigo-600 hover:underline text-sm">
+                                ✏️ Editar
+                            </a>
+                            <a href="/Vehicles/Delete/@vehicle.Id" class="text-red-600 hover:underline text-sm">
+                                🗑️ Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

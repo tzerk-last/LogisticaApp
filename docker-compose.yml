@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: logistica_db
+    environment:
+      POSTGRES_USER: tzerk
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: LogisticaApp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: logistica_app
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=LogisticaApp;Username=tzerk;Password=password123
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
