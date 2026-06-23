@@ -4,37 +4,53 @@
     ViewData["Title"] = "Eliminar Vehículo";
 }
 
-<h2 class="text-3xl font-bold text-gray-800 mb-8">Eliminar Vehículo</h2>
+<h2 class="text-2xl font-bold mb-4 text-red-600">
+    🗑️ Eliminar Vehículo
+</h2>
 
-<div class="bg-white rounded-lg shadow-md p-8 max-w-2xl">
-    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg mb-6">
-        <p class="font-bold">⚠️ Advertencia</p>
-        <p>Esta acción es irreversible. ¿Estás seguro?</p>
-    </div>
+<div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mb-4">
 
-    <div class="space-y-4 mb-8">
-        <div>
-            <label class="text-gray-600 text-sm">Placa</label>
-            <p class="text-lg font-bold">@Model.LicensePlate</p>
-        </div>
-        <div>
-            <label class="text-gray-600 text-sm">Vehículo</label>
-            <p class="text-lg font-bold">@Model.Brand @Model.Model (@Model.Year)</p>
-        </div>
-        <div>
-            <label class="text-gray-600 text-sm">Capacidad</label>
-            <p class="text-lg font-bold">@Model.MaxWeightKg kg</p>
-        </div>
-    </div>
+    <p class="text-gray-700 mb-4">
+        ¿Está seguro que desea eliminar el vehículo
+        <strong>
+            @Model.Brand @Model.Model (@Model.LicensePlate)
+        </strong>?
+    </p>
 
-    <form method="post" action="/Vehicles/Delete" class="flex gap-4">
-        <input type="hidden" name="Id" value="@Model.Id">
-        
-        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-bold">
-            Sí, Eliminar
+    <dl class="mb-6 border-l-4 border-red-600 pl-4 space-y-2">
+
+        <div>
+            <dt class="font-bold">Placa:</dt>
+            <dd>@Model.LicensePlate</dd>
+        </div>
+
+        <div>
+            <dt class="font-bold">Marca / Modelo:</dt>
+            <dd>@Model.Brand @Model.Model @Model.Year</dd>
+        </div>
+
+        <div>
+            <dt class="font-bold">Capacidad:</dt>
+            <dd>@Model.MaxWeightKg kg</dd>
+        </div>
+
+        <div>
+            <dt class="font-bold">Estado:</dt>
+            <dd>@Model.Status</dd>
+        </div>
+
+    </dl>
+
+    <form method="post" style="display:inline;">
+        <button type="submit"
+                class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 font-bold">
+            Confirmar Eliminación
         </button>
-        <a href="/Vehicles" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
-            Cancelar
-        </a>
     </form>
+
+    <a href="/Vehicles"
+       class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold inline-block">
+        Cancelar
+    </a>
+
 </div>

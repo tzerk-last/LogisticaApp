@@ -5,8 +5,8 @@
 }
 
 <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800">💰 Gestión de Tarifas</h2>
-    <a href="/Tariffs/Create" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 font-bold">
+    <h2 class="text-3xl font-bold text-gray-800">💰 Tarifas de Envío</h2>
+    <a href="/Tariffs/Create" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold">
         ➕ Nueva Tarifa
     </a>
 </div>
@@ -22,11 +22,11 @@
             <thead class="border-b bg-gray-50">
                 <tr>
                     <th class="text-left py-3 px-4">Nombre</th>
-                    <th class="text-left py-3 px-4">Distancia (km)</th>
+                    <th class="text-left py-3 px-4">Rango de Distancia</th>
                     <th class="text-left py-3 px-4">Precio Base</th>
-                    <th class="text-left py-3 px-4">Por kg</th>
+                    <th class="text-left py-3 px-4">Por Kg</th>
                     <th class="text-left py-3 px-4">Prioridad</th>
-                    <th class="text-left py-3 px-4">Activo</th>
+                    <th class="text-left py-3 px-4">Estado</th>
                     <th class="text-left py-3 px-4">Acciones</th>
                 </tr>
             </thead>
@@ -35,15 +35,27 @@
                 {
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-3 px-4 font-bold">@tariff.Name</td>
-                        <td class="py-3 px-4">@tariff.MinDistance - @tariff.MaxDistance km</td>
-                        <td class="py-3 px-4">${@Math.Round(tariff.BasePrice, 2)}</td>
-                        <td class="py-3 px-4">${@Math.Round(tariff.PricePerKg, 2)}</td>
-                        <td class="py-3 px-4">@(tariff.IsPriority ? "🔴 Sí" : "⚪ No")</td>
-                        <td class="py-3 px-4">@(tariff.IsActive ? "✅" : "❌")</td>
+                        <td class="py-3 px-4">@tariff.MinDistance km - @tariff.MaxDistance km</td>
+                        <td class="py-3 px-4 font-bold">${@tariff.BasePrice.ToString("F2")}</td>
+                        <td class="py-3 px-4">${@tariff.PricePerKg.ToString("F2")}</td>
                         <td class="py-3 px-4">
+                            @if (tariff.IsPriority)
+                            {
+                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">⚡ URGENTE</span>
+                            }
+                            else
+                            {
+                                <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Normal</span>
+                            }
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="@(tariff.IsActive ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700") px-3 py-1 rounded-full text-sm font-bold">
+                                @(tariff.IsActive ? "Activa" : "Inactiva")
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-sm">
                             <a href="/Tariffs/Edit/@tariff.Id" class="text-indigo-600 hover:underline">Editar</a>
-                            |
-                            <a href="/Tariffs/Delete/@tariff.Id" class="text-red-600 hover:underline">Eliminar</a>
+                            <a href="/Tariffs/Delete/@tariff.Id" class="text-red-600 hover:underline ml-2">Eliminar</a>
                         </td>
                     </tr>
                 }

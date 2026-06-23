@@ -1,0 +1,47 @@
+@model LogisticaApp.Models.Delivery
+
+@{
+    ViewData["Title"] = "Registrar Entrega";
+}
+
+<h2 class="text-2xl font-bold mb-4">📦 Registrar Nueva Entrega</h2>
+
+<form method="post" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <label class="block font-bold mb-2">ID del Envío</label>
+            <input type="number" name="ShipmentId" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div>
+            <label class="block font-bold mb-2">ID del Conductor</label>
+            <input type="number" name="DriverId" class="w-full border rounded px-3 py-2" required />
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <label class="block font-bold mb-2">Nombre del Receptor</label>
+            <input type="text" name="ReceiverName" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div>
+            <label class="block font-bold mb-2">Cédula/RUC del Receptor</label>
+            <input type="text" name="ReceiverDocumentId" class="w-full border rounded px-3 py-2" required />
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Foto de Entrega</label>
+        <input type="file" name="photoFile" accept="image/*" class="w-full border rounded px-3 py-2" required />
+        <p class="text-gray-600 text-sm mt-1">Esta foto será procesada con OCR para validación</p>
+    </div>
+
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Notas de Validación (Opcional)</label>
+        <textarea name="ValidationNotes" class="w-full border rounded px-3 py-2" rows="3"></textarea>
+    </div>
+
+    <div class="flex gap-2">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 font-bold">Registrar Entrega</button>
+        <a href="/Deliveries" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold">Cancelar</a>
+    </div>
+</form>

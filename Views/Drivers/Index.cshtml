@@ -1,3 +1,4 @@
+@using LogisticaApp.Models
 @model List<LogisticaApp.Models.Driver>
 
 @{
@@ -5,18 +6,16 @@
 }
 
 <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800">Gestión de Conductores</h2>
-    <a href="/Drivers/Create" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-bold">
-        + Nuevo Conductor
+    <h2 class="text-3xl font-bold text-gray-800">👨‍✈️ Conductores</h2>
+    <a href="/Drivers/Create" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold">
+        ➕ Nuevo Conductor
     </a>
 </div>
 
 <div class="bg-white rounded-lg shadow-md p-6">
     @if (Model.Count == 0)
     {
-        <div class="text-center text-gray-500 py-8">
-            <p class="text-lg">No hay conductores registrados</p>
-        </div>
+        <p class="text-gray-500 text-center py-8">No hay conductores registrados</p>
     }
     else
     {
@@ -25,8 +24,8 @@
                 <tr>
                     <th class="text-left py-3 px-4">Nombre</th>
                     <th class="text-left py-3 px-4">Licencia</th>
-                    <th class="text-left py-3 px-4">Vehículo</th>
-                    <th class="text-left py-3 px-4">Rating</th>
+                    <th class="text-left py-3 px-4">Vencimiento</th>
+                    <th class="text-left py-3 px-4">Calificación</th>
                     <th class="text-left py-3 px-4">Entregas</th>
                     <th class="text-left py-3 px-4">Estado</th>
                     <th class="text-left py-3 px-4">Acciones</th>
@@ -35,28 +34,30 @@
             <tbody>
                 @foreach (var driver in Model)
                 {
-                    var statusClass = driver.Status.ToString() == "Available" ? "bg-green-100 text-green-700" :
-                                      driver.Status.ToString() == "OnDelivery" ? "bg-yellow-100 text-yellow-700" :
-                                      "bg-red-100 text-red-700";
+                    var statusColor = driver.Status switch
+                    {
+                        DriverStatus.Available => "bg-green-100 text-green-700",
+                        DriverStatus.OnDelivery => "bg-blue-100 text-blue-700",
+                        DriverStatus.OnBreak => "bg-yellow-100 text-yellow-700",
+                        _ => "bg-red-100 text-red-700"
+                    };
                     
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-3 px-4 font-bold">@driver.User?.Name</td>
                         <td class="py-3 px-4">@driver.LicenseNumber</td>
-                        <td class="py-3 px-4">@driver.Vehicle?.LicensePlate</td>
-                        <td class="py-3 px-4">⭐ @driver.AverageRating</td>
+                        <td class="py-3 px-4">@driver.LicenseExpiry.ToString("dd/MM/yyyy")</td>
+                        <td class="py-3 px-4">
+                            <span class="text-yellow-500">⭐ @driver.AverageRating.ToString("F1")</span>
+                        </td>
                         <td class="py-3 px-4">@driver.TotalDeliveries</td>
                         <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusClass">
+                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusColor">
                                 @driver.Status
                             </span>
                         </td>
-                        <td class="py-3 px-4 space-x-2">
-                            <a href="/Drivers/Edit/@driver.Id" class="text-indigo-600 hover:underline text-sm">
-                                ✏️ Editar
-                            </a>
-                            <a href="/Drivers/Delete/@driver.Id" class="text-red-600 hover:underline text-sm">
-                                🗑️ Eliminar
-                            </a>
+                        <td class="py-3 px-4 text-sm">
+                            <a href="/Drivers/Edit/@driver.Id" class="text-indigo-600 hover:underline">Editar</a>
+                            <a href="/Drivers/Delete/@driver.Id" class="text-red-600 hover:underline ml-2">Eliminar</a>
                         </td>
                     </tr>
                 }

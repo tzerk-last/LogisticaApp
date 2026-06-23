@@ -1,3 +1,4 @@
+@using LogisticaApp.Models
 @model List<LogisticaApp.Models.Delivery>
 
 @{
@@ -5,50 +6,54 @@
 }
 
 <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800">Entregas Registradas</h2>
+    <h2 class="text-3xl font-bold text-gray-800">📦 Entregas</h2>
+    <a href="/Deliveries/Create" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold">
+        ➕ Registrar Entrega
+    </a>
 </div>
 
 <div class="bg-white rounded-lg shadow-md p-6">
     @if (Model.Count == 0)
     {
-        <div class="text-center text-gray-500 py-8">
-            <p class="text-lg">No hay entregas registradas</p>
-        </div>
+        <p class="text-gray-500 text-center py-8">No hay entregas registradas</p>
     }
     else
     {
         <table class="w-full">
             <thead class="border-b bg-gray-50">
                 <tr>
-                    <th class="text-left py-3 px-4">Guía</th>
+                    <th class="text-left py-3 px-4">Guía de Envío</th>
                     <th class="text-left py-3 px-4">Conductor</th>
                     <th class="text-left py-3 px-4">Receptor</th>
-                    <th class="text-left py-3 px-4">Validación</th>
-                    <th class="text-left py-3 px-4">Confianza IA</th>
                     <th class="text-left py-3 px-4">Fecha</th>
+                    <th class="text-left py-3 px-4">Validación</th>
+                    <th class="text-left py-3 px-4">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var delivery in Model)
                 {
-                    var statusClass = delivery.ValidationStatus.ToString() == "Approved" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700";
+                    var validationColor = delivery.ValidationStatus switch
+                    {
+                        AIValidationStatus.Approved => "bg-green-100 text-green-700",
+                        AIValidationStatus.Rejected => "bg-red-100 text-red-700",
+                        _ => "bg-yellow-100 text-yellow-700"
+                    };
                     
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-3 px-4 font-bold">@delivery.Shipment?.GuideNumber</td>
                         <td class="py-3 px-4">@delivery.Driver?.User?.Name</td>
                         <td class="py-3 px-4">@delivery.ReceiverName</td>
+                        <td class="py-3 px-4">@delivery.DeliveryDate.ToString("dd/MM/yyyy HH:mm")</td>
                         <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusClass">
+                            <span class="px-3 py-1 rounded-full text-sm font-bold @validationColor">
                                 @delivery.ValidationStatus
                             </span>
                         </td>
-                        <td class="py-3 px-4">
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-indigo-600 h-2 rounded-full" style="width: @(delivery.AIConfidence * 100)%"></div>
-                            </div>
-                            @(Math.Round(delivery.AIConfidence * 100))%
+                        <td class="py-3 px-4 text-sm">
+                            <a href="/Deliveries/Details/@delivery.Id" class="text-indigo-600 hover:underline">Ver</a>
+                            <a href="/Deliveries/Delete/@delivery.Id" class="text-red-600 hover:underline ml-2">Eliminar</a>
                         </td>
-                        <td class="py-3 px-4">@delivery.DeliveryDate.ToString("yyyy-MM-dd")</td>
                     </tr>
                 }
             </tbody>

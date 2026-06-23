@@ -1,71 +1,51 @@
 @model LogisticaApp.Models.Vehicle
 
 @{
-    ViewData["Title"] = "Crear Vehículo";
+    ViewData["Title"] = "Nuevo Vehículo";
 }
 
-<h2 class="text-3xl font-bold text-gray-800 mb-8">Nuevo Vehículo</h2>
+<h2 class="text-2xl font-bold mb-4">🚚 Registrar Nuevo Vehículo</h2>
 
-<div class="bg-white rounded-lg shadow-md p-8 max-w-2xl">
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
-            @Html.ValidationSummary(false)
-        </div>
-    }
-
-    <form method="post" action="/Vehicles/Create" class="space-y-6">
+<form method="post" class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Placa *</label>
-            <input type="text" name="LicensePlate" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
-                placeholder="ABC-1234" required>
+            <label class="block font-bold mb-2">Placa</label>
+            <input type="text" name="LicensePlate" placeholder="ej: ABC-1234" class="w-full border rounded px-3 py-2" required />
         </div>
-
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Marca *</label>
-            <input type="text" name="Brand" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
-                placeholder="Toyota" required>
+            <label class="block font-bold mb-2">Marca</label>
+            <input type="text" name="Brand" placeholder="ej: Toyota" class="w-full border rounded px-3 py-2" required />
         </div>
+    </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Modelo *</label>
-            <input type="text" name="Model" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
-                placeholder="Hilux" required>
+            <label class="block font-bold mb-2">Modelo</label>
+            <input type="text" name="Model" placeholder="ej: Hilux" class="w-full border rounded px-3 py-2" required />
         </div>
-
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Año *</label>
-            <input type="number" name="Year" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
-                placeholder="2024" required>
+            <label class="block font-bold mb-2">Año</label>
+            <input type="number" name="Year" min="2000" max="2099" placeholder="ej: 2023" class="w-full border rounded px-3 py-2" required />
         </div>
+    </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Capacidad Máxima (kg) *</label>
-            <input type="number" name="MaxWeightKg" step="0.01"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
-                placeholder="5000" required>
+            <label class="block font-bold mb-2">Capacidad (kg)</label>
+            <input type="number" name="Capacity" step="100" placeholder="ej: 2000" class="w-full border rounded px-3 py-2" required />
         </div>
-
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Estado *</label>
-            <select name="Status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
-                <option value="Available">Disponible</option>
-                <option value="InMaintenance">En Mantenimiento</option>
-                <option value="Inactive">Inactivo</option>
+            <label class="block font-bold mb-2">Estado</label>
+            <select name="Status" class="w-full border rounded px-3 py-2">
+                <option value="0">Disponible</option>
+                <option value="1">En Mantenimiento</option>
+                <option value="2">Inactivo</option>
             </select>
         </div>
+    </div>
 
-        <div class="flex gap-4 pt-4">
-            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold">
-                Crear Vehículo
-            </button>
-            <a href="/Vehicles" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
-                Cancelar
-            </a>
-        </div>
-    </form>
-</div>
+    <div class="flex gap-2">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 font-bold">Crear Vehículo</button>
+        <a href="/Vehicles" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold">Cancelar</a>
+    </div>
+</form>

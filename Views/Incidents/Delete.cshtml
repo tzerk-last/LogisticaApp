@@ -1,0 +1,36 @@
+@using LogisticaApp.Models
+@model LogisticaApp.Models.Incident
+
+@{
+    ViewData["Title"] = "Eliminar Incidencia";
+}
+
+<h2 class="text-2xl font-bold mb-4 text-red-600">🗑️ Eliminar Incidencia</h2>
+
+<div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mb-4">
+    <p class="text-gray-700 mb-4">¿Está seguro que desea eliminar esta incidencia de tipo <strong>@Model.IncidentType</strong>?</p>
+    
+    <dl class="mb-6 border-l-4 border-red-600 pl-4 space-y-2">
+        <div>
+            <dt class="font-bold">Guía del Envío:</dt>
+            <dd>@Model.Shipment?.GuideNumber</dd>
+        </div>
+        <div>
+            <dt class="font-bold">Conductor:</dt>
+            <dd>@Model.Driver?.User?.Name</dd>
+        </div>
+        <div>
+            <dt class="font-bold">Fecha:</dt>
+            <dd>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+        </div>
+        <div>
+            <dt class="font-bold">Estado:</dt>
+            <dd>@Model.Status</dd>
+        </div>
+    </dl>
+
+    <form method="post" style="display:inline;">
+        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 font-bold">Confirmar Eliminación</button>
+    </form>
+    <a href="/Incidents" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold inline-block">Cancelar</a>
+</div>

@@ -4,37 +4,27 @@
     ViewData["Title"] = "Eliminar Conductor";
 }
 
-<h2 class="text-3xl font-bold text-gray-800 mb-8">Eliminar Conductor</h2>
+<h2 class="text-2xl font-bold mb-4 text-red-600">🗑️ Eliminar Conductor</h2>
 
-<div class="bg-white rounded-lg shadow-md p-8 max-w-2xl">
-    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg mb-6">
-        <p class="font-bold">⚠️ Advertencia</p>
-        <p>Esta acción es irreversible. ¿Estás seguro?</p>
-    </div>
-
-    <div class="space-y-4 mb-8">
-        <div>
-            <label class="text-gray-600 text-sm">Nombre</label>
-            <p class="text-lg font-bold">@Model.User?.Name</p>
-        </div>
-        <div>
-            <label class="text-gray-600 text-sm">Licencia</label>
-            <p class="text-lg font-bold">@Model.LicenseNumber</p>
-        </div>
-        <div>
-            <label class="text-gray-600 text-sm">Vehículo</label>
-            <p class="text-lg font-bold">@Model.Vehicle?.LicensePlate</p>
-        </div>
-    </div>
-
-    <form method="post" action="/Drivers/Delete" class="flex gap-4">
-        <input type="hidden" name="Id" value="@Model.Id">
+<div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mb-4">
+    <p class="text-gray-700 mb-4">¿Está seguro que desea eliminar al conductor <strong>@Model.User?.Name</strong>?</p>
+    
+    <dl class="mb-6 border-l-4 border-red-600 pl-4">
+        <dt class="font-bold">Licencia:</dt>
+        <dd class="text-gray-700">@Model.LicenseNumber</dd>
         
-        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-bold">
-            Sí, Eliminar
-        </button>
-        <a href="/Drivers" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
-            Cancelar
-        </a>
+        <dt class="font-bold mt-2">Entregas Realizadas:</dt>
+        <dd class="text-gray-700">@Model.TotalDeliveries</dd>
+        
+        <dt class="font-bold mt-2">Calificación:</dt>
+        <dd class="text-gray-700">⭐ @Model.AverageRating.ToString("F1")</dd>
+        
+        <dt class="font-bold mt-2">Estado:</dt>
+        <dd class="text-gray-700">@Model.Status</dd>
+    </dl>
+
+    <form method="post" style="display:inline;">
+        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 font-bold">Confirmar Eliminación</button>
     </form>
+    <a href="/Drivers" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold inline-block">Cancelar</a>
 </div>

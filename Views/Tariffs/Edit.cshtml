@@ -1,56 +1,58 @@
 @model LogisticaApp.Models.Tariff
 
 @{
-    ViewData["Title"] = "Nueva Tarifa";
+    ViewData["Title"] = "Editar Tarifa";
 }
 
-<h2 class="text-2xl font-bold mb-4">💰 Crear Nueva Tarifa</h2>
+<h2 class="text-2xl font-bold mb-4">✏️ Editar Tarifa</h2>
 
 <form method="post" class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
     <div class="mb-4">
         <label class="block font-bold mb-2">Nombre de la Tarifa</label>
-        <input type="text" name="Name" placeholder="ej: Tarifa Metropolitana" class="w-full border rounded px-3 py-2" required />
+        <input type="text" name="Name" value="@Model.Name" class="w-full border rounded px-3 py-2" required />
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
             <label class="block font-bold mb-2">Distancia Mínima (km)</label>
-            <input type="number" name="MinDistance" step="0.1" class="w-full border rounded px-3 py-2" required />
+            <input type="number" name="MinDistance" step="0.1" value="@Model.MinDistance" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
             <label class="block font-bold mb-2">Distancia Máxima (km)</label>
-            <input type="number" name="MaxDistance" step="0.1" class="w-full border rounded px-3 py-2" required />
+            <input type="number" name="MaxDistance" step="0.1" value="@Model.MaxDistance" class="w-full border rounded px-3 py-2" required />
         </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
             <label class="block font-bold mb-2">Precio Base ($)</label>
-            <input type="number" name="BasePrice" step="0.01" class="w-full border rounded px-3 py-2" required />
+            <input type="number" name="BasePrice" step="0.01" value="@Model.BasePrice" class="w-full border rounded px-3 py-2" required />
         </div>
         <div>
             <label class="block font-bold mb-2">Precio por Kg ($)</label>
-            <input type="number" name="PricePerKg" step="0.01" class="w-full border rounded px-3 py-2" required />
+            <input type="number" name="PricePerKg" step="0.01" value="@Model.PricePerKg" class="w-full border rounded px-3 py-2" required />
         </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
             <label class="flex items-center gap-2 font-bold">
-                <input type="checkbox" name="IsPriority" class="w-4 h-4" />
+                <input type="checkbox" name="IsPriority" @(Model.IsPriority ? "checked" : "") class="w-4 h-4" />
                 Tarifa de Envío Urgente
             </label>
         </div>
         <div>
             <label class="flex items-center gap-2 font-bold">
-                <input type="checkbox" name="IsActive" checked class="w-4 h-4" />
+                <input type="checkbox" name="IsActive" @(Model.IsActive ? "checked" : "") class="w-4 h-4" />
                 Activar Tarifa
             </label>
         </div>
     </div>
 
     <div class="flex gap-2">
-        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 font-bold">Crear Tarifa</button>
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 font-bold">Guardar Cambios</button>
         <a href="/Tariffs" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold">Cancelar</a>
     </div>
 </form>

@@ -1,0 +1,45 @@
+@using LogisticaApp.Models
+@model LogisticaApp.Models.Incident
+
+@{
+    ViewData["Title"] = "Editar Incidencia";
+}
+
+<h2 class="text-2xl font-bold mb-4">✏️ Editar Incidencia</h2>
+
+<form method="post" class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="ShipmentId" value="@Model.ShipmentId" />
+    <input type="hidden" name="DriverId" value="@Model.DriverId" />
+    <input type="hidden" name="CreatedAt" value="@Model.CreatedAt" />
+
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Tipo de Incidencia</label>
+        <input type="text" name="IncidentType" value="@Model.IncidentType" class="w-full border rounded px-3 py-2" required />
+    </div>
+
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Descripción</label>
+        <textarea name="Description" class="w-full border rounded px-3 py-2" rows="4" required>@Model.Description</textarea>
+    </div>
+
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Estado</label>
+        <select name="Status" class="w-full border rounded px-3 py-2">
+            <option value="0" selected="@(Model.Status == IncidentStatus.Reported)">Reportado</option>
+            <option value="1" selected="@(Model.Status == IncidentStatus.Investigating)">Investigando</option>
+            <option value="2" selected="@(Model.Status == IncidentStatus.Resolved)">Resuelto</option>
+            <option value="3" selected="@(Model.Status == IncidentStatus.Closed)">Cerrado</option>
+        </select>
+    </div>
+
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Notas de Resolución</label>
+        <textarea name="ResolutionNotes" class="w-full border rounded px-3 py-2" rows="3">@Model.ResolutionNotes</textarea>
+    </div>
+
+    <div class="flex gap-2">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 font-bold">Guardar Cambios</button>
+        <a href="/Incidents" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold">Cancelar</a>
+    </div>
+</form>

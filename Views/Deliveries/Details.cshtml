@@ -1,0 +1,97 @@
+@using LogisticaApp.Models
+@model LogisticaApp.Models.Delivery
+
+@{
+    ViewData["Title"] = "Detalles de Entrega";
+}
+
+<div class="mb-8">
+    <a href="/Deliveries" class="text-indigo-600 hover:underline">← Volver a Entregas</a>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6 max-w-3xl">
+    <h2 class="text-2xl font-bold mb-6">📦 @Model.Shipment?.GuideNumber</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+            <h3 class="font-bold text-lg mb-3">Información del Envío</h3>
+            <dl class="space-y-2">
+                <div>
+                    <dt class="font-semibold">Guía:</dt>
+                    <dd>@Model.Shipment?.GuideNumber</dd>
+                </div>
+                <div>
+                    <dt class="font-semibold">Cliente:</dt>
+                    <dd>@Model.Shipment?.Client?.Name</dd>
+                </div>
+                <div>
+                    <dt class="font-semibold">Costo:</dt>
+                    <dd>${@Model.Shipment?.TotalCost.ToString("F2")}</dd>
+                </div>
+            </dl>
+        </div>
+
+        <div>
+            <h3 class="font-bold text-lg mb-3">Información del Conductor</h3>
+            <dl class="space-y-2">
+                <div>
+                    <dt class="font-semibold">Nombre:</dt>
+                    <dd>@Model.Driver?.User?.Name</dd>
+                </div>
+                <div>
+                    <dt class="font-semibold">Vehículo:</dt>
+                    <dd>@Model.Driver?.Vehicle?.Brand @Model.Driver?.Vehicle?.Model</dd>
+                </div>
+                <div>
+                    <dt class="font-semibold">Calificación:</dt>
+                    <dd>⭐ @Model.Driver?.AverageRating.ToString("F1")</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="border-t pt-6 mb-6">
+        <h3 class="font-bold text-lg mb-3">Información de Entrega</h3>
+        <dl class="space-y-3">
+            <div>
+                <dt class="font-semibold">Receptor:</dt>
+                <dd>@Model.ReceiverName</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">Cédula/RUC:</dt>
+                <dd>@Model.ReceiverDocumentId</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">Fecha de Entrega:</dt>
+                <dd>@Model.DeliveryDate.ToString("dd/MM/yyyy HH:mm:ss")</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">Estado de Validación:</dt>
+                <dd>
+                    <span class="@(Model.ValidationStatus.ToString() == "Approved" ? "bg-green-100 text-green-700" : Model.ValidationStatus.ToString() == "Rejected" ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700") px-3 py-1 rounded-full font-bold">
+                        @Model.ValidationStatus
+                    </span>
+                </dd>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.ValidationNotes))
+            {
+                <div>
+                    <dt class="font-semibold">Notas:</dt>
+                    <dd class="bg-gray-50 p-3 rounded">@Model.ValidationNotes</dd>
+                </div>
+            }
+        </dl>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.PhotoPath))
+    {
+        <div class="border-t pt-6 mb-6">
+            <h3 class="font-bold text-lg mb-3">Foto de Entrega</h3>
+            <img src="@Model.PhotoPath" alt="Foto de entrega" class="max-w-md rounded-lg shadow" />
+        </div>
+    }
+
+    <div class="flex gap-2 border-t pt-6">
+        <a href="/Deliveries" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold">Volver</a>
+    </div>
+</div>

@@ -22,6 +22,18 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Deliveries/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVsaXZlcmllcy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Deliveries/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVsaXZlcmllcy9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Deliveries/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVsaXZlcmllcy9EZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Deliveries/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVsaXZlcmllcy9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -70,6 +82,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jaWRlbnRzL0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Incidents/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jaWRlbnRzL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Incidents/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jaWRlbnRzL0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Incidents/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jaWRlbnRzL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Incidents/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jaWRlbnRzL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -108,6 +132,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Tariffs/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFyaWZmcy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Tariffs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFyaWZmcy9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Tariffs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFyaWZmcy9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/tzerk/Documents/C\#.net/LogisticaApp/Views/Tariffs/Index.cshtml]

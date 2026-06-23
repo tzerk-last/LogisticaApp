@@ -4,48 +4,43 @@
     ViewData["Title"] = "Reportar Incidencia";
 }
 
-<h2 class="text-3xl font-bold text-gray-800 mb-8">⚠️ Reportar Incidencia</h2>
+<h2 class="text-2xl font-bold mb-4">⚠️ Reportar Nueva Incidencia</h2>
 
-<div class="bg-white rounded-lg shadow-md p-6 max-w-2xl">
-    <form method="post" enctype="multipart/form-data">
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Envío (Guía)</label>
-            <input type="number" name="shipmentId" value="@ViewBag.ShipmentId" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
-            @if (ViewBag.GuideNumber != null)
-            {
-                <p class="text-sm text-gray-600 mt-2">📦 @ViewBag.GuideNumber</p>
-            }
-        </div>
+<form method="post" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
+    <div class="mb-4">
+        <label class="block font-bold mb-2">ID del Envío</label>
+        <input type="number" name="ShipmentId" value="@ViewBag.ShipmentId" class="w-full border rounded px-3 py-2" required />
+        @if (ViewBag.GuideNumber != null)
+        {
+            <p class="text-gray-600 text-sm mt-1">Guía: @ViewBag.GuideNumber</p>
+        }
+    </div>
 
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Tipo de Incidencia</label>
-            <select name="incidentType" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
-                <option value="">Seleccionar...</option>
-                <option value="Delay">Retraso en entrega</option>
-                <option value="Damage">Daño en producto</option>
-                <option value="Wrong">Entrega incorrecta</option>
-                <option value="Missing">Artículo faltante</option>
-                <option value="Other">Otro</option>
-            </select>
-        </div>
+    <div class="mb-4">
+        <label class="block font-bold mb-2">ID del Conductor</label>
+        <input type="number" name="DriverId" value="@ViewBag.DriverId" class="w-full border rounded px-3 py-2" required />
+    </div>
 
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Descripción</label>
-            <textarea name="description" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></textarea>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <label class="block font-bold mb-2">Tipo de Incidencia</label>
+            <input type="text" name="IncidentType" placeholder="ej: Retraso, Daño, Pérdida" class="w-full border rounded px-3 py-2" required />
         </div>
+    </div>
 
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Foto de Evidencia</label>
-            <input type="file" name="photoFile" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-        </div>
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Descripción</label>
+        <textarea name="Description" class="w-full border rounded px-3 py-2" rows="4" placeholder="Describe el incidente en detalle..." required></textarea>
+    </div>
 
-        <div class="flex gap-4">
-            <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-bold">
-                📤 Reportar Incidencia
-            </button>
-            <a href="/Incidents/Index" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 font-bold">
-                Cancelar
-            </a>
-        </div>
-    </form>
-</div>
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Foto de Evidencia (Opcional)</label>
+        <input type="file" name="photoFile" accept="image/*" class="w-full border rounded px-3 py-2" />
+        <p class="text-gray-600 text-sm mt-1">Formatos permitidos: JPG, PNG</p>
+    </div>
+
+    <div class="flex gap-2">
+        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 font-bold">Reportar Incidencia</button>
+        <a href="/Incidents" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 font-bold">Cancelar</a>
+    </div>
+</form>
