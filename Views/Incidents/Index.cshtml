@@ -1,0 +1,57 @@
+@model List<LogisticaApp.Models.Incident>
+
+@{
+    ViewData["Title"] = "Incidencias";
+}
+
+<div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-800">⚠️ Registro de Incidencias</h2>
+    <a href="/Incidents/Create" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-bold">
+        ➕ Nueva Incidencia
+    </a>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6">
+    @if (Model.Count == 0)
+    {
+        <p class="text-gray-500 text-center py-8">No hay incidencias registradas</p>
+    }
+    else
+    {
+        <table class="w-full">
+            <thead class="border-b bg-gray-50">
+                <tr>
+                    <th class="text-left py-3 px-4">Guía</th>
+                    <th class="text-left py-3 px-4">Tipo</th>
+                    <th class="text-left py-3 px-4">Descripción</th>
+                    <th class="text-left py-3 px-4">Estado</th>
+                    <th class="text-left py-3 px-4">Fecha</th>
+                    <th class="text-left py-3 px-4">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var incident in Model)
+                {
+                    var statusColor = incident.Status.ToString() == "Resolved" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700";
+                    
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4 font-bold">@incident.Shipment?.GuideNumber</td>
+                        <td class="py-3 px-4">@incident.IncidentType</td>
+                        <td class="py-3 px-4">@incident.Description?.Substring(0, Math.Min(30, incident.Description?.Length ?? 0))...</td>
+                        <td class="py-3 px-4">
+                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusColor">
+                                @incident.Status
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">@incident.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="py-3 px-4">
+                            <a href="/Incidents/Details/@incident.Id" class="text-indigo-600 hover:underline">Ver</a>
+                            |
+                            <a href="/Incidents/Edit/@incident.Id" class="text-indigo-600 hover:underline">Editar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

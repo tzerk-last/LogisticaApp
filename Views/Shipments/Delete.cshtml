@@ -4,41 +4,27 @@
     ViewData["Title"] = "Eliminar Envío";
 }
 
-<h2 class="text-3xl font-bold text-gray-800 mb-8">Eliminar Envío</h2>
+<h2 class="text-2xl font-bold mb-4 text-red-600">🗑️ Eliminar Envío</h2>
 
-<div class="bg-white rounded-lg shadow-md p-8 max-w-2xl">
-    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg mb-6">
-        <p class="font-bold">⚠️ Advertencia</p>
-        <p>Esta acción es irreversible. ¿Estás seguro de que deseas eliminar este envío?</p>
-    </div>
-
-    <div class="space-y-4 mb-8">
-        <div>
-            <label class="text-gray-600 text-sm">Número de Guía</label>
-            <p class="text-lg font-bold">@Model.GuideNumber</p>
-        </div>
-        <div>
-            <label class="text-gray-600 text-sm">Cliente</label>
-            <p class="text-lg font-bold">@Model.Client?.Name</p>
-        </div>
-        <div>
-            <label class="text-gray-600 text-sm">Peso</label>
-            <p class="text-lg font-bold">@Model.Weight kg</p>
-        </div>
-        <div>
-            <label class="text-gray-600 text-sm">Precio Base</label>
-            <p class="text-lg font-bold">$@Model.BasePrice</p>
-        </div>
-    </div>
-
-    <form method="post" action="/Shipments/Delete" class="flex gap-4">
-        <input type="hidden" name="Id" value="@Model.Id">
+<div class="bg-white p-6 rounded-lg shadow-md mb-4">
+    <p class="text-gray-700 mb-4">¿Está seguro que desea eliminar el envío <strong>@Model.GuideNumber</strong>?</p>
+    
+    <dl class="mb-4">
+        <dt class="font-bold">Cliente:</dt>
+        <dd>@Model.Client?.Name</dd>
         
-        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-bold">
-            Sí, Eliminar
-        </button>
-        <a href="/Shipments" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
-            Cancelar
-        </a>
+        <dt class="font-bold mt-2">Tipo de Carga:</dt>
+        <dd>@Model.CargoType</dd>
+        
+        <dt class="font-bold mt-2">Peso:</dt>
+        <dd>@Model.Weight kg</dd>
+        
+        <dt class="font-bold mt-2">Costo Total:</dt>
+        <dd>$@Model.TotalCost</dd>
+    </dl>
+
+    <form method="post" style="display:inline;">
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Confirmar Eliminación</button>
     </form>
+    <a href="/Shipments" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 inline-block">Cancelar</a>
 </div>

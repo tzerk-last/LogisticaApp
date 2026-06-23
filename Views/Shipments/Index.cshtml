@@ -5,18 +5,28 @@
 }
 
 <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800">Gestión de Envíos</h2>
-    <a href="/Shipments/Create" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-bold">
-        + Nuevo Envío
-    </a>
+    <h2 class="text-3xl font-bold text-gray-800">📦 Envíos</h2>
+    <div class="flex gap-4">
+        <a href="/Shipments/Create" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold">
+            ➕ Nuevo Envío
+        </a>
+        <a href="/Shipments/DriverWorkload" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-bold">
+            👥 Carga de Conductores
+        </a>
+    </div>
 </div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-4">
+        ✅ @TempData["SuccessMessage"]
+    </div>
+}
 
 <div class="bg-white rounded-lg shadow-md p-6">
     @if (Model.Count == 0)
     {
-        <div class="text-center text-gray-500 py-8">
-            <p class="text-lg">No hay envíos registrados</p>
-        </div>
+        <p class="text-gray-500 text-center py-8">No hay envíos</p>
     }
     else
     {
@@ -26,47 +36,42 @@
                     <th class="text-left py-3 px-4">Guía</th>
                     <th class="text-left py-3 px-4">Cliente</th>
                     <th class="text-left py-3 px-4">Conductor</th>
-                    <th class="text-left py-3 px-4">Destino</th>
                     <th class="text-left py-3 px-4">Estado</th>
-                    <th class="text-left py-3 px-4">Costo</th>
+                    <th class="text-left py-3 px-4">Monto</th>
                     <th class="text-left py-3 px-4">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var shipment in Model)
                 {
-                    var statusStr = shipment.Status.ToString();
-                    var statusClass = statusStr == "Created" ? "bg-blue-100 text-blue-700" :
-                                      statusStr == "Assigned" ? "bg-yellow-100 text-yellow-700" :
-                                      statusStr == "InTransit" ? "bg-orange-100 text-orange-700" :
-                                      statusStr == "Delivered" ? "bg-green-100 text-green-700" :
-                                      statusStr == "Cancelled" ? "bg-red-100 text-red-700" :
-                                      "bg-gray-100 text-gray-700";
-
+                    var statusColor = shipment.Status switch
+                    {
+                        ShipmentStatus.Delivered => "bg-green-100 text-green-700",
+                        ShipmentStatus.Assigned => "bg-blue-100 text-blue-700",
+                        ShipmentStatus.Cancelled => "bg-red-100 text-red-700",
+                        _ => "bg-yellow-100 text-yellow-700"
+                    };
+                    
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-3 px-4 font-bold">@shipment.GuideNumber</td>
                         <td class="py-3 px-4">@shipment.Client?.Name</td>
-                        <td class="py-3 px-4">@shipment.Driver?.User?.Name ?? "Sin asignar"</td>
-                        <td class="py-3 px-4">@shipment.Route?.DestinationAddress</td>
+                        <td class="py-3 px-4">@(shipment.Driver?.User?.Name ?? "Sin asignar")</td>
                         <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusClass">
+                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusColor">
                                 @shipment.Status
                             </span>
                         </td>
-                        <td class="py-3 px-4">$@shipment.TotalCost</td>
-                        <td class="py-3 px-4 space-x-2 flex flex-wrap gap-1">
-                            <a href="/Shipments/Edit/@shipment.Id" class="text-indigo-600 hover:underline text-sm">
-                                ✏️ Editar
-                            </a>
-                            @if (shipment.Status == ShipmentStatus.InTransit)
+                        <td class="py-3 px-4">${@Math.Round(shipment.TotalCost, 2)}</td>
+                        <td class="py-3 px-4 text-sm">
+                            @if (shipment.Status != ShipmentStatus.Assigned && shipment.Status != ShipmentStatus.Delivered)
                             {
-                                <a href="/Deliveries/ValidateDelivery/@shipment.Id" class="text-green-600 hover:underline text-sm">
-                                    ✔️ Validar
-                                </a>
+                                <form method="post" action="/Shipments/AssignSmartly/@shipment.Id" style="display:inline;">
+                                    <button type="submit" class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 text-xs font-bold">
+                                        🤖 Asignar
+                                    </button>
+                                </form>
                             }
-                            <a href="/Shipments/Delete/@shipment.Id" class="text-red-600 hover:underline text-sm">
-                                🗑️ Eliminar
-                            </a>
+                            <a href="/Shipments/Edit/@shipment.Id" class="text-indigo-600 hover:underline ml-2">Editar</a>
                         </td>
                     </tr>
                 }

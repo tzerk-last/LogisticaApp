@@ -13,6 +13,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<DeliveryValidationService>();
 builder.Services.AddScoped<FinancialService>();
+builder.Services.AddScoped<AssignmentService>();
 
 builder.Services.AddSession(options =>
 {

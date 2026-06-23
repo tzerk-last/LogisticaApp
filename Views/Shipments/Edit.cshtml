@@ -4,61 +4,40 @@
     ViewData["Title"] = "Editar Envío";
 }
 
-<h2 class="text-3xl font-bold text-gray-800 mb-8">Editar Envío #@Model.GuideNumber</h2>
+<h2 class="text-2xl font-bold mb-4">✏️ Editar Envío</h2>
 
-<div class="bg-white rounded-lg shadow-md p-8 max-w-2xl">
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
-            @Html.ValidationSummary(false)
-        </div>
-    }
+<form method="post" class="bg-white p-6 rounded-lg shadow-md">
+    <input type="hidden" name="Id" value="@Model.Id" />
 
-    <form method="post" action="/Shipments/Edit" class="space-y-6">
-        <input type="hidden" name="Id" value="@Model.Id">
-        <input type="hidden" name="GuideNumber" value="@Model.GuideNumber">
-        <input type="hidden" name="ClientId" value="@Model.ClientId">
-        <input type="hidden" name="RouteId" value="@Model.RouteId">
-        <input type="hidden" name="CargoType" value="@Model.CargoType">
-        <input type="hidden" name="Weight" value="@Model.Weight">
-        <input type="hidden" name="BasePrice" value="@Model.BasePrice">
-        <input type="hidden" name="Description" value="@Model.Description">
-
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Número de Guía</label>
-            <input type="text" value="@Model.GuideNumber" 
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100" disabled>
+            <label class="block font-bold mb-2">Número de Guía</label>
+            <input type="text" name="GuideNumber" value="@Model.GuideNumber" class="w-full border rounded px-3 py-2" required />
         </div>
-
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Estado *</label>
-            <select name="Status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
-                <option value="1">Creado</option>
-                <option value="2">Asignado</option>
-                <option value="3">En Tránsito</option>
-                <option value="4">Entregado</option>
-                <option value="5">Cancelado</option>
-            </select>
+            <label class="block font-bold mb-2">Cliente</label>
+            <select name="ClientId" class="w-full border rounded px-3 py-2" required></select>
         </div>
+    </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-            <label class="block text-gray-700 font-bold mb-2">Conductor</label>
-            <select name="DriverId" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
-                <option value="">Sin asignar</option>
-                @foreach (var driver in (List<LogisticaApp.Models.Driver>)ViewBag.Drivers)
-                {
-                    <option value="@driver.Id">@driver.User?.Name</option>
-                }
-            </select>
+            <label class="block font-bold mb-2">Tipo de Carga</label>
+            <input type="text" name="CargoType" value="@Model.CargoType" class="w-full border rounded px-3 py-2" required />
         </div>
+        <div>
+            <label class="block font-bold mb-2">Peso (kg)</label>
+            <input type="number" name="Weight" step="0.01" value="@Model.Weight" class="w-full border rounded px-3 py-2" required />
+        </div>
+    </div>
 
-        <div class="flex gap-4 pt-4">
-            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold">
-                Guardar Cambios
-            </button>
-            <a href="/Shipments" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
-                Cancelar
-            </a>
-        </div>
-    </form>
-</div>
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Descripción</label>
+        <textarea name="Description" class="w-full border rounded px-3 py-2" rows="4" required>@Model.Description</textarea>
+    </div>
+
+    <div class="flex gap-2">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Guardar</button>
+        <a href="/Shipments" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Cancelar</a>
+    </div>
+</form>

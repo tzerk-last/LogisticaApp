@@ -1,0 +1,53 @@
+@model List<LogisticaApp.Models.Tariff>
+
+@{
+    ViewData["Title"] = "Tarifas";
+}
+
+<div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-800">💰 Gestión de Tarifas</h2>
+    <a href="/Tariffs/Create" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 font-bold">
+        ➕ Nueva Tarifa
+    </a>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6">
+    @if (Model.Count == 0)
+    {
+        <p class="text-gray-500 text-center py-8">No hay tarifas configuradas</p>
+    }
+    else
+    {
+        <table class="w-full">
+            <thead class="border-b bg-gray-50">
+                <tr>
+                    <th class="text-left py-3 px-4">Nombre</th>
+                    <th class="text-left py-3 px-4">Distancia (km)</th>
+                    <th class="text-left py-3 px-4">Precio Base</th>
+                    <th class="text-left py-3 px-4">Por kg</th>
+                    <th class="text-left py-3 px-4">Prioridad</th>
+                    <th class="text-left py-3 px-4">Activo</th>
+                    <th class="text-left py-3 px-4">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tariff in Model)
+                {
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4 font-bold">@tariff.Name</td>
+                        <td class="py-3 px-4">@tariff.MinDistance - @tariff.MaxDistance km</td>
+                        <td class="py-3 px-4">${@Math.Round(tariff.BasePrice, 2)}</td>
+                        <td class="py-3 px-4">${@Math.Round(tariff.PricePerKg, 2)}</td>
+                        <td class="py-3 px-4">@(tariff.IsPriority ? "🔴 Sí" : "⚪ No")</td>
+                        <td class="py-3 px-4">@(tariff.IsActive ? "✅" : "❌")</td>
+                        <td class="py-3 px-4">
+                            <a href="/Tariffs/Edit/@tariff.Id" class="text-indigo-600 hover:underline">Editar</a>
+                            |
+                            <a href="/Tariffs/Delete/@tariff.Id" class="text-red-600 hover:underline">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

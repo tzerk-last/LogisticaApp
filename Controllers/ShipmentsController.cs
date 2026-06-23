@@ -10,11 +10,13 @@ namespace LogisticaApp.Controllers
     {
         private readonly AppDbContext _context;
         private readonly EmailService _emailService;
+        private readonly AssignmentService _assignmentService;
 
-        public ShipmentsController(AppDbContext context, EmailService emailService)
+        public ShipmentsController(AppDbContext context, EmailService emailService, AssignmentService assignmentService)
         {
             _context = context;
             _emailService = emailService;
+            _assignmentService = assignmentService;
         }
 
         public async Task<IActionResult> Index()
@@ -23,54 +25,66 @@ namespace LogisticaApp.Controllers
                 .Include(s => s.Client)
                 .Include(s => s.Driver)
                 .Include(s => s.Route)
+                .OrderByDescending(s => s.CreatedAt)
                 .ToListAsync();
             return View(shipments);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.Clients = _context.Users.Where(u => u.Role == UserRole.Client).ToList();
-            ViewBag.Routes = _context.Routes.ToList();
+            ViewBag.Routes = await _context.Routes.ToListAsync();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Shipment shipment)
         {
-            if (ModelState.IsValid)
+            var clientId = HttpContext.Session.GetInt32("UserId");
+            if (!clientId.HasValue)
+                return Unauthorized();
+
+            shipment.ClientId = clientId.Value;
+            shipment.CreatedAt = DateTime.UtcNow;
+            shipment.Status = ShipmentStatus.Created;
+
+            _context.Add(shipment);
+            await _context.SaveChangesAsync();
+
+            var client = await _context.Users.FindAsync(clientId);
+            if (client != null)
             {
-                shipment.CreatedAt = DateTime.UtcNow;
-                shipment.Status = ShipmentStatus.Created;
-                _context.Add(shipment);
-                await _context.SaveChangesAsync();
-
-                // Enviar email al cliente
-                var client = await _context.Users.FindAsync(shipment.ClientId);
-                if (client != null)
-                {
-                    await _emailService.SendShipmentCreatedAsync(client.Email, client.Name, shipment.GuideNumber);
-                }
-
-                return RedirectToAction(nameof(Index));
+                await _emailService.SendShipmentCreatedAsync(client.Email, client.Name, shipment.GuideNumber);
             }
-            ViewBag.Clients = _context.Users.Where(u => u.Role == UserRole.Client).ToList();
-            ViewBag.Routes = _context.Routes.ToList();
-            return View(shipment);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignSmartly(int id)
+        {
+            var result = await _assignmentService.AssignShipmentAsync(id);
+            
+            if (result.Success)
+                TempData["SuccessMessage"] = result.Message;
+            else
+                TempData["ErrorMessage"] = result.Message;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DriverWorkload()
+        {
+            var workload = await _assignmentService.GetDriverWorkloadAsync();
+            return View(workload);
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var shipment = await _context.Shipments
-                .Include(s => s.Client)
-                .Include(s => s.Driver)
-                .FirstOrDefaultAsync(s => s.Id == id);
-
+            var shipment = await _context.Shipments.FindAsync(id);
             if (shipment == null)
                 return NotFound();
-
-            ViewBag.Clients = _context.Users.Where(u => u.Role == UserRole.Client).ToList();
-            ViewBag.Routes = _context.Routes.ToList();
-            ViewBag.Drivers = _context.Drivers.Include(d => d.User).ToList();
+            
+            ViewBag.Routes = await _context.Routes.ToListAsync();
             return View(shipment);
         }
 
@@ -80,58 +94,22 @@ namespace LogisticaApp.Controllers
             if (id != shipment.Id)
                 return NotFound();
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    var originalShipment = await _context.Shipments
-                        .Include(s => s.Driver)
-                        .Include(s => s.Client)
-                        .FirstOrDefaultAsync(s => s.Id == id);
-
-                    // Si cambió de estado, enviar notificación
-                    if (originalShipment.Status != shipment.Status)
-                    {
-                        var client = originalShipment.Client;
-                        if (shipment.Status == ShipmentStatus.Assigned && shipment.DriverId.HasValue)
-                        {
-                            var driver = await _context.Drivers.Include(d => d.User).FirstOrDefaultAsync(d => d.Id == shipment.DriverId);
-                            if (client != null && driver != null)
-                            {
-                                await _emailService.SendShipmentAssignedAsync(client.Email, client.Name, shipment.GuideNumber, driver.User.Name);
-                            }
-                        }
-                        else if (shipment.Status == ShipmentStatus.Delivered)
-                        {
-                            if (client != null)
-                            {
-                                await _emailService.SendDeliveryCompletedAsync(client.Email, client.Name, shipment.GuideNumber);
-                            }
-                        }
-                    }
-
-                    _context.Update(shipment);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ShipmentExists(shipment.Id))
-                        return NotFound();
-                    throw;
-                }
+                _context.Update(shipment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            ViewBag.Clients = _context.Users.Where(u => u.Role == UserRole.Client).ToList();
-            ViewBag.Routes = _context.Routes.ToList();
-            ViewBag.Drivers = _context.Drivers.Include(d => d.User).ToList();
-            return View(shipment);
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> Delete(int id)
         {
             var shipment = await _context.Shipments
                 .Include(s => s.Client)
-                .Include(s => s.Driver)
                 .FirstOrDefaultAsync(s => s.Id == id);
 
             if (shipment == null)
@@ -150,11 +128,6 @@ namespace LogisticaApp.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ShipmentExists(int id)
-        {
-            return _context.Shipments.Any(e => e.Id == id);
         }
     }
 }
