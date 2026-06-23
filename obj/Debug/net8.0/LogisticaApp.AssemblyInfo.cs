@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LogisticaApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d158b8a8fb1eae22b43079db065af37e4f11d76")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa84cd7b1dc35592d5e72cce10b94e84d5307b1d")]
 [assembly: System.Reflection.AssemblyProductAttribute("LogisticaApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LogisticaApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<DeliveryValidationService>();
+builder.Services.AddScoped<FinancialService>();
 
 builder.Services.AddSession(options =>
 {

@@ -155,3 +155,11 @@
 /Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/x64/leptonica-1.82.0.dll
 /Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/x64/tesseract50.dll
 /Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/Tesseract.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/ClosedXML.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/ClosedXML.Parser.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/DocumentFormat.OpenXml.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/DocumentFormat.OpenXml.Framework.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/ExcelNumberFormat.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/RBush.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/SixLabors.Fonts.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/System.IO.Packaging.dll
