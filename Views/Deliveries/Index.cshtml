@@ -1,0 +1,57 @@
+@model List<LogisticaApp.Models.Delivery>
+
+@{
+    ViewData["Title"] = "Entregas";
+}
+
+<div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-800">Entregas Registradas</h2>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6">
+    @if (Model.Count == 0)
+    {
+        <div class="text-center text-gray-500 py-8">
+            <p class="text-lg">No hay entregas registradas</p>
+        </div>
+    }
+    else
+    {
+        <table class="w-full">
+            <thead class="border-b bg-gray-50">
+                <tr>
+                    <th class="text-left py-3 px-4">Guía</th>
+                    <th class="text-left py-3 px-4">Conductor</th>
+                    <th class="text-left py-3 px-4">Receptor</th>
+                    <th class="text-left py-3 px-4">Validación</th>
+                    <th class="text-left py-3 px-4">Confianza IA</th>
+                    <th class="text-left py-3 px-4">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var delivery in Model)
+                {
+                    var statusClass = delivery.ValidationStatus.ToString() == "Approved" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700";
+                    
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4 font-bold">@delivery.Shipment?.GuideNumber</td>
+                        <td class="py-3 px-4">@delivery.Driver?.User?.Name</td>
+                        <td class="py-3 px-4">@delivery.ReceiverName</td>
+                        <td class="py-3 px-4">
+                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusClass">
+                                @delivery.ValidationStatus
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-indigo-600 h-2 rounded-full" style="width: @(delivery.AIConfidence * 100)%"></div>
+                            </div>
+                            @(Math.Round(delivery.AIConfidence * 100))%
+                        </td>
+                        <td class="py-3 px-4">@delivery.DeliveryDate.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

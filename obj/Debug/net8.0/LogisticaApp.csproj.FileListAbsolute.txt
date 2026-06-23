@@ -144,3 +144,14 @@
 /Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/Npgsql.dll
 /Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
 /Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/BCrypt-Net-Next.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/BouncyCastle.Cryptography.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/MailKit.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/MimeKit.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/System.Security.Cryptography.Pkcs.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/obj/Debug/net8.0/LogisticaApp.sourcelink.json
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/x86/leptonica-1.82.0.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/x86/tesseract50.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/x64/leptonica-1.82.0.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/x64/tesseract50.dll
+/Users/tzerk/Documents/C#.net/LogisticaApp/bin/Debug/net8.0/Tesseract.dll

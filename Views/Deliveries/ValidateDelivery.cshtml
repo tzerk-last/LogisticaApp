@@ -1,0 +1,77 @@
+@{
+    ViewData["Title"] = "Validar Entrega";
+    var shipment = ViewBag.Shipment;
+}
+
+<h2 class="text-3xl font-bold text-gray-800 mb-8">Validar Entrega</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Información del Envío -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Información del Envío</h3>
+        <div class="space-y-3">
+            <div>
+                <label class="text-gray-600 text-sm">Guía</label>
+                <p class="text-lg font-bold">@shipment.GuideNumber</p>
+            </div>
+            <div>
+                <label class="text-gray-600 text-sm">Cliente</label>
+                <p class="text-lg font-bold">@shipment.Client?.Name</p>
+            </div>
+            <div>
+                <label class="text-gray-600 text-sm">Destino</label>
+                <p class="text-lg font-bold">@shipment.Route?.DestinationAddress</p>
+            </div>
+            <div>
+                <label class="text-gray-600 text-sm">Tipo de Carga</label>
+                <p class="text-lg font-bold">@shipment.CargoType</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Validación -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Validar con IA</h3>
+        
+        <form method="post" action="/Deliveries/ValidateDelivery" enctype="multipart/form-data" class="space-y-6">
+            <input type="hidden" name="shipmentId" value="@shipment.Id">
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">📸 Foto de Entrega *</label>
+                <input type="file" name="photoFile" accept="image/*" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    required>
+                <p class="text-sm text-gray-500 mt-1">Foto de la guía o comprobante firmado</p>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Nombre del Receptor *</label>
+                <input type="text" name="receiverName" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    placeholder="Juan Pérez" required>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-2">Número de Identificación *</label>
+                <input type="text" name="receiverDocumentId" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600"
+                    placeholder="1234567890" required>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                <p class="text-sm text-blue-700">
+                    <strong>🤖 Validación Automática:</strong> La IA extraerá automáticamente datos de la foto (nombre, ID, fecha, guía).
+                </p>
+            </div>
+
+            <div class="flex gap-4 pt-4">
+                <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 font-bold flex-1">
+                    ✔️ Validar Entrega
+                </button>
+                <a href="/Deliveries" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 font-bold">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

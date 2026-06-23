@@ -5,7 +5,7 @@
 }
 
 <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-800">Lista de Envíos</h2>
+    <h2 class="text-3xl font-bold text-gray-800">Gestión de Envíos</h2>
     <a href="/Shipments/Create" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-bold">
         + Nuevo Envío
     </a>
@@ -25,35 +25,45 @@
                 <tr>
                     <th class="text-left py-3 px-4">Guía</th>
                     <th class="text-left py-3 px-4">Cliente</th>
-                    <th class="text-left py-3 px-4">Tipo</th>
-                    <th class="text-left py-3 px-4">Peso</th>
-                    <th class="text-left py-3 px-4">Precio</th>
+                    <th class="text-left py-3 px-4">Conductor</th>
+                    <th class="text-left py-3 px-4">Destino</th>
                     <th class="text-left py-3 px-4">Estado</th>
+                    <th class="text-left py-3 px-4">Costo</th>
                     <th class="text-left py-3 px-4">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var shipment in Model)
                 {
+                    var statusStr = shipment.Status.ToString();
+                    var statusClass = statusStr == "Created" ? "bg-blue-100 text-blue-700" :
+                                      statusStr == "Assigned" ? "bg-yellow-100 text-yellow-700" :
+                                      statusStr == "InTransit" ? "bg-orange-100 text-orange-700" :
+                                      statusStr == "Delivered" ? "bg-green-100 text-green-700" :
+                                      statusStr == "Cancelled" ? "bg-red-100 text-red-700" :
+                                      "bg-gray-100 text-gray-700";
+
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-3 px-4 font-bold">@shipment.GuideNumber</td>
                         <td class="py-3 px-4">@shipment.Client?.Name</td>
-                        <td class="py-3 px-4">@shipment.CargoType</td>
-                        <td class="py-3 px-4">@shipment.Weight kg</td>
-                        <td class="py-3 px-4">${{ shipment.BasePrice }}</td>
+                        <td class="py-3 px-4">@shipment.Driver?.User?.Name ?? "Sin asignar"</td>
+                        <td class="py-3 px-4">@shipment.Route?.DestinationAddress</td>
                         <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm font-bold
-                                @(shipment.Status == LogisticaApp.Models.ShipmentStatus.Delivered ? "bg-green-100 text-green-700" :
-                                  shipment.Status == LogisticaApp.Models.ShipmentStatus.InTransit ? "bg-yellow-100 text-yellow-700" :
-                                  shipment.Status == LogisticaApp.Models.ShipmentStatus.Cancelled ? "bg-red-100 text-red-700" :
-                                  "bg-blue-100 text-blue-700")">
+                            <span class="px-3 py-1 rounded-full text-sm font-bold @statusClass">
                                 @shipment.Status
                             </span>
                         </td>
-                        <td class="py-3 px-4 space-x-2">
+                        <td class="py-3 px-4">$@shipment.TotalCost</td>
+                        <td class="py-3 px-4 space-x-2 flex flex-wrap gap-1">
                             <a href="/Shipments/Edit/@shipment.Id" class="text-indigo-600 hover:underline text-sm">
                                 ✏️ Editar
                             </a>
+                            @if (shipment.Status == ShipmentStatus.InTransit)
+                            {
+                                <a href="/Deliveries/ValidateDelivery/@shipment.Id" class="text-green-600 hover:underline text-sm">
+                                    ✔️ Validar
+                                </a>
+                            }
                             <a href="/Shipments/Delete/@shipment.Id" class="text-red-600 hover:underline text-sm">
                                 🗑️ Eliminar
                             </a>
